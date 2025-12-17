@@ -385,10 +385,8 @@
 waitlistForm.addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  console.log('Submit triggered'); // 👈 add this
 
   const email = document.getElementById('email').value;
-  console.log('Email:', email);
 
   try {
     const res = await fetch(
@@ -403,7 +401,6 @@ waitlistForm.addEventListener('submit', async (e) => {
       }
     );
 
-    console.log('Response:', res.status);
 
     if (!res.ok) throw new Error('Failed');
 
