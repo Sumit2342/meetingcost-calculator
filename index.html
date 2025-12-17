@@ -383,21 +383,35 @@
 
         // Handle waitlist form
         waitlistForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('email').value;
-            
-            await fetch('https://api.sheetbest.com/sheets/2f3d8f13-fbd0-47b2-87ef-8fbb8449f7bc', {
+          e.preventDefault();
+        
+          const email = document.getElementById('email').value;
+        
+          try {
+            const res = await fetch(
+              'https://api.sheetbest.com/sheets/2f3d8f13-fbd0-47b2-87ef-8fbb8449f7bc',
+              {
                 method: 'POST',
-                headers: {'Content-Type': 'application/json'},
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    Email: email,
-                    Timestamp: new Date().toISOString()
+                  Email: email,
+                  Timestamp: new Date().toISOString()
                 })
-            });
-            
+              }
+            );
+        
+            if (!res.ok) {
+              throw new Error('Sheet submit failed');
+            }
+        
             successMessage.classList.add('show');
             waitlistForm.reset();
+          } catch (err) {
+            alert('Something went wrong. Please try again.');
+            console.error(err);
+          }
         });
+
 
         // Calculate on page load
         calculateCost();
