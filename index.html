@@ -382,21 +382,21 @@
         }
 
         // Handle waitlist form
-        waitlistForm.addEventListener('submit', (e) => {
+        waitlistForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = document.getElementById('email').value;
             
-            // Here you would normally send to your backend
-            // For now, just show success message
-            console.log('Waitlist signup:', email);
+            await fetch('YOUR_SHEETBEST_URL', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    Email: email,
+                    Timestamp: new Date().toISOString()
+                })
+            });
             
             successMessage.classList.add('show');
             waitlistForm.reset();
-            
-            // Hide success message after 5 seconds
-            setTimeout(() => {
-                successMessage.classList.remove('show');
-            }, 5000);
         });
 
         // Calculate on page load
